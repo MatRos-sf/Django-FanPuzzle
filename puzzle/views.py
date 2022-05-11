@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from .models import Puzzle, Company
-from .forms import AddPuzzleForm, AddCompanyForm
+from .forms import AddPuzzleForm, AddCompanyForm, UrlJumbo
 
 
 class HomeListView(ListView):
@@ -45,5 +45,15 @@ def add_company(request):
         return render(request, 'puzzle/add_puzzle.html', {"forms": forms})
 
 
-# def import_data(request):
-#
+def import_data(request):
+    forms = UrlJumbo()
+    if request.method == 'POST':
+        forms = UrlJumbo(request.POST)
+        if forms.is_valid():
+            cd = forms.cleaned_data
+            print(cd)
+            return redirect('home')
+        else:
+            return render(request, 'puzzle/import/jumbo.html', {'forms': forms})
+    else:
+        return render(request, 'puzzle/import/jumbo.html', {'forms': forms})

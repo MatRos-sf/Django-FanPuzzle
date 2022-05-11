@@ -30,5 +30,18 @@ class AddPuzzleForm(forms.ModelForm):
     #     return cd
 
 class UrlJumbo(forms.Form):
-    url = forms.CharField()
+    url = forms.CharField(required=False)
     #must be: https://www.jumbo.eu/en/products/
+
+    def clean(self):
+        cd = super().clean()
+        #replace in case if client write "htt ps: //www .jum bo. eu/en /produc ts/falcon-the-veg etable-garden-1000- pieces /"
+        url = cd.get('url').replace(" ","")
+        print(url)
+        if not url:
+            self.add_error('url', "Please, Paste Jumbo website url")
+        if not "https://www.jumbo.eu/en/products/" in url:
+            self.add_error('url', 'Jumbo website begins: "https://www.jumbo.eu/en/products/..." ')
+        if url.count('/') != 6:
+            self.add_error('url', 'Check your link. The link must include 6 char: "/"')
+        return cd
