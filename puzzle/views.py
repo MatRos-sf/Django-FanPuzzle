@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from .models import Puzzle, Company
-from .forms import AddPuzzleForm
+from .forms import AddPuzzleForm, AddCompanyForm
 
 
 class HomeListView(ListView):
@@ -31,4 +31,19 @@ def add_puzzle(request):
         return render(request, 'puzzle/add_puzzle.html', {"forms": forms})
 
 def add_company(request):
-    pass
+    #I use the same template: add_puzzle
+    forms = AddCompanyForm()
+    if request.method == 'POST':
+        forms = AddCompanyForm(request.POST)
+        if forms.is_valid():
+            cd = forms.cleaned_data
+            company = Company.objects.create(**cd)
+            return redirect('home')
+        else:
+            return render(request, 'puzzle/add_puzzle.html', {"forms": forms})
+    else:
+        return render(request, 'puzzle/add_puzzle.html', {"forms": forms})
+
+
+# def import_data(request):
+#

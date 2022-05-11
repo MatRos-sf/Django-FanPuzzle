@@ -1,13 +1,16 @@
 from .models import Puzzle, Company
 from django import forms
 
-COMPANIES = [(i.id, i) for i in Company.objects.all()]
-# class AddCompany(forms.ModelForm):
-#     class Meta:
-#         model = Company
-#         field = '__all__'
+
+
+class AddCompanyForm(forms.ModelForm):
+
+    class Meta:
+        model = Company
+        fields = '__all__'
 
 class AddPuzzleForm(forms.ModelForm):
+    COMPANIES = [(i.id, i) for i in Company.objects.all()]
     name = forms.CharField(widget=forms.TextInput(), required=False)
     number_of_pieces = forms.CharField(widget=forms.TextInput())
     ean_code = forms.CharField(widget=forms.TextInput())
