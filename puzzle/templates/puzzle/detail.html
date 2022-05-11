@@ -1,0 +1,34 @@
+{% extends 'frame.html' %}
+
+{% block title %}{{ puzzle.id }}{% endblock %}
+
+{% block content %}
+
+    <div class="row featurette">
+      <div class="col-md-5">
+        <h2 class="featurette-heading"> {{ puzzle.name }} </h2>
+          <hr class="featurette-divider">
+            <p class="lead">Number of pieces: {{ puzzle.number_of_pieces }}</p>
+            <p class="lead">EAN code: {{ puzzle.ean_code }}</p>
+            <p class="lead">Product code: {{ puzzle.product_code }}</p>
+          <hr class="featurette-divider">
+          <p class="lead">{{ puzzle.description }}</p>
+          <p class="lead-bold text-center"> {{ puzzle.company }}</p>
+
+
+      </div>
+      <div class="col-md-6">
+        {% if puzzle.image %}
+              <img src="{{ puzzle.image.url }}" class="img-fluid" alt="{{ puzzle.image.name }}">
+        {% else %}
+          <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#eee" ></rect>
+            </svg>
+        {% endif %}
+
+      </div>
+    </div>
+
+
+{% endblock %}

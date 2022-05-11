@@ -1,0 +1,32 @@
+{% extends 'frame.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+    <h1>Hello Wellcome to the page ;) </h1>
+    {% for i in puzzle_list %}
+        <p>{{ i }}<a href="{% url 'puzzle-detail' i.pk %}">d</a></p>
+    {% empty %}
+        <p>We are working for this problem ;) </p>
+    {% endfor %}
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          1 of 3
+        </div>
+        <div class="col">
+          2 of 3
+        </div>
+        <div class="col">
+              <button >
+                    <a href="https://www.trefl.com/media/catalog/product/2/6/26194_150_p.png">
+                        <img src="https://www.trefl.com/media/catalog/product/2/6/26194_150_p.png" class="img-thumbnail" alt="...">
+                    </a>
+                </button>
+        </div>
+    </div>
+    </div>
+    <img alt="" height="150" src="https://www.jumbo.eu/png/11241_1_1.png" width="150">
+{% endblock %}
