@@ -3,6 +3,7 @@ from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from .models import Puzzle, Company
 from .forms import AddPuzzleForm, AddCompanyForm, UrlJumbo
+from .information_with_website.jumbo import information_with_jumbo
 
 
 class HomeListView(ListView):
@@ -51,7 +52,7 @@ def import_data(request):
         forms = UrlJumbo(request.POST)
         if forms.is_valid():
             cd = forms.cleaned_data
-            print(cd)
+            print(information_with_jumbo(cd['url']))
             return redirect('home')
         else:
             return render(request, 'puzzle/import/jumbo.html', {'forms': forms})

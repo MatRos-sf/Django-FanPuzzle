@@ -1,0 +1,1 @@
+from .jumbo import information_with_jumbo
