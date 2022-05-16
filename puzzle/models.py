@@ -14,7 +14,7 @@ class Puzzle(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='puzzles')
     product_code = models.CharField(max_length=50)
     image = models.ImageField(upload_to='images/', blank=True, null=True)
-    #website
+    website = models.URLField(blank=True, null=True)
     created = models.DateField(auto_now_add=True)
     def __str__(self):
         return self.name
