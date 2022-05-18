@@ -19,3 +19,17 @@ class Puzzle(models.Model):
     def __str__(self):
         return self.name
 
+    def delete(self, using=None, keep_parents=False):
+        self.image.delete()
+        super(Puzzle, self).delete()
+    # def save(
+    #     self, force_insert=False, force_update=False, using=None, update_fields=None
+    # ):
+    #     # when we upgrade new image old have to delete
+    #     try:
+    #         old_image = Puzzle.objects.get(id=self.pk)
+    #         if old_image.image != self.image:
+    #             old_image.image.delete()
+    #     except:     pass
+    #     super(Puzzle, self).save()
+

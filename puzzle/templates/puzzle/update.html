@@ -1,0 +1,30 @@
+{% extends 'frame.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                {% for i in forms %}
+                    <label class="form-label">{{ i.label }}</label>
+                    <p> {{ i }}</p>
+                {% endfor %}
+                <input class="btn btn-secondary" type="submit" value="Save">
+            </div>
+        </form>
+        {% if forms.errors %}
+           {% for field in forms %}
+              {% for error in field.errors %}
+                  {{ error|escape }}
+              {% endfor %}
+           {% endfor %}
+        {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

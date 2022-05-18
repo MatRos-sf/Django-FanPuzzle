@@ -54,7 +54,14 @@ def information_with_jumbo(url_website):
         image = corrent_image[0]
     else:
         image = None
+    #Simple downolad image and add to media
 
+    if image:
+        from datetime import datetime
+        name_image = datetime.now().strftime("%Y-%m-%d-%H-%M-%S") +'.jpg'
+        img_data = requests.get(image).content
+        with open(f'media\\images\\{name_image}', 'wb') as hadler:
+            hadler.write(img_data)
     payload = {
         'name': name,
         'number_of_pieces': nop,
@@ -62,7 +69,7 @@ def information_with_jumbo(url_website):
         'description': description,
         'company': "Jumbo",
         'product_code': an,
-        'image': image,
+        'image': f'images/{name_image}' if image else image,
         'website': url_website
     }
     return payload
