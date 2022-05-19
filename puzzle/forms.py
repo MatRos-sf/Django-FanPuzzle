@@ -10,17 +10,18 @@ class AddCompanyForm(forms.ModelForm):
         fields = '__all__'
 
 class AddPuzzleForm(forms.ModelForm):
-    COMPANIES = [(i.id, i) for i in Company.objects.all()]
+    #COMPANIES = [(i.id, i) for i in Company.objects.all()]
+    #COMPANIES = [(1,1),(2,2)]
     name = forms.CharField(widget=forms.TextInput(), required=False)
     number_of_pieces = forms.CharField(widget=forms.TextInput())
     ean_code = forms.CharField(widget=forms.TextInput())
     description = forms.CharField(widget=forms.TextInput())
-    company = forms.ChoiceField(choices=COMPANIES)
+    #company = forms.ChoiceField(choices=COMPANIES)
     product_code = forms.CharField(widget=forms.TextInput())
     image = forms.ImageField(required=False)
     class Meta:
         model = Puzzle
-        fields = ["name", "number_of_pieces", "ean_code", "description", "product_code", "image"]
+        fields = ["name", "number_of_pieces", "ean_code", "description", "product_code", "image", 'company']
 
     # def clean_name(self):
     #     cd = super().clean()

@@ -24,10 +24,8 @@ def add_puzzle(request):
         forms = AddPuzzleForm(request.POST, request.FILES)
         if forms.is_valid():
             cd = forms.cleaned_data
-            print(cd)
-            company = Company.objects.get(id=int(cd.pop('company')))
+            company = cd.pop('company')
             puzzle = Puzzle.objects.create(company=company,**cd)
-            #return render(request, 'puzzle/add_puzzle.html', {"forms": forms})
             return redirect('puzzle-detail', pk=puzzle.pk)
         else:
             return render(request, 'puzzle/add_puzzle.html', {"forms": forms})
