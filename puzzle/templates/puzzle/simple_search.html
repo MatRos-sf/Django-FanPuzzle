@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% if name %}
+        <h1>You looked for {{ name }}. We found {{ searched.count }} results</h1>
+        {% for object in searched %}
+            <p>{{ object.name }}</p>
+        {% empty %}
+            <p1>We can't find this word in our database. </p1>
+        {% endfor %}
+    {% else %}
+        <h1> Nothing ;) </h1>
+    {% endif %}
+</body>
+</html>

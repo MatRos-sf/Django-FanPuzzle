@@ -49,6 +49,8 @@ def add_company(request):
 # import from Jumbo
 def import_data(request):
     forms = UrlJumbo()
+    if request.method == 'GET':
+        print(1)
     if request.method == 'POST':
         forms = UrlJumbo(request.POST)
         if forms.is_valid():
@@ -85,3 +87,23 @@ def update_puzzle(request, pk):
             return HttpResponse("<h1>Smth is wrong </h1>")
     else:
         return render(request, 'puzzle/update.html', {'forms': form})
+
+
+
+
+from .filters import PuzzleFilter
+def search_puzzle(request):
+    f = PuzzleFilter(request.GET, queryset=Puzzle.objects.all())
+    return render(request, 'puzzle/search.html', {'filter': f})
+
+def search_navibar(request):
+    # I wll do: About 4,930,000,000 results (0.69 seconds)
+    if request.method == 'GET':
+        name = request.GET['name']
+        searched = Puzzle.objects.filter(name__contains=name)
+        print(searched.count())
+
+        return render(request, 'puzzle/simple_search.html', {'searched': searched,
+                                                             'name': name})
+
+    return render(request, 'puzzle/simple_search.html', {})
