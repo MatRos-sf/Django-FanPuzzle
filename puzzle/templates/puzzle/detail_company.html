@@ -1,0 +1,39 @@
+{% extends 'frame.html' %}
+
+{% block title %}{{ company.id }}{% endblock %}
+
+{% block content %}
+
+
+    <div class="row featurette">
+      <div class="col-md-5">
+        <h2 class="featurette-heading"> {{ company.name }} </h2>
+          <hr class="featurette-divider">
+            <p class="lead">Fullname company: {{ company.fullname }}</p>
+            <p class="lead">Country: {{ company.country }}</p>
+            <p class="lead">City: {{ company.city }}</p>
+            <p class="lead">Email: {{ company.email }}</p>
+            <p class="lead">Phone Number: {{ company.phone_number }}</p>
+            <p class="lead">Website: {{ company.website }}</p>
+
+          <hr class="featurette-divider">
+          <p class="lead">{{ company.description }}</p>
+          <p class="lead-bold text-center"> {{ company.name }}</p>
+
+
+      </div>
+      <div class="col-md-6">
+        {% if company.image %}
+              <img src="{{ company.image.url }}" class="img-fluid" alt="{{ company.image.name }}">
+        {% else %}
+          <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#eee" ></rect>
+            </svg>
+        {% endif %}
+
+      </div>
+    </div>
+
+
+{% endblock %}

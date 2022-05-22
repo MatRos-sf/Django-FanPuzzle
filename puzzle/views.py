@@ -18,6 +18,11 @@ class PuzzleDetail(DetailView):
     template_name = 'puzzle/detail.html'
     context_object_name = 'puzzle'
 
+class CompanyDetail(DetailView):
+    model = Company
+    template_name = 'puzzle/detail_company.html'
+    context_object_name = 'company'
+
 def add_puzzle(request):
     forms = AddPuzzleForm()
     if request.method == 'POST':
@@ -76,6 +81,7 @@ def import_data(request):
 
 
 #edit
+## Puzzle
 def update_puzzle(request, pk):
     p = get_object_or_404(Puzzle, pk=pk)
     form = AddPuzzleForm(request.POST or None, request.FILES or None, instance=p)
@@ -88,8 +94,19 @@ def update_puzzle(request, pk):
     else:
         return render(request, 'puzzle/update.html', {'forms': form})
 
+## Company
 
-
+def update_company(request,pk):
+    c = get_object_or_404(Company, pk=pk)
+    form = AddCompanyForm(request.POST or None, instance= c)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('company-detail', pk=c.pk)
+        else:
+            return HttpResponse("<h1>Smth is wrong </h1>")
+    else:
+        return render(request, 'puzzle/update.html', {'forms': form})
 
 from .filters import PuzzleFilter
 def search_puzzle(request):

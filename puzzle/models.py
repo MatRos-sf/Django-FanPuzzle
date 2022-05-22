@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 class Company(models.Model):
 
     name = models.CharField(max_length=150, unique=True)
@@ -13,8 +14,12 @@ class Company(models.Model):
     phone_number = models.CharField(max_length=500, blank=True, null=True)
     image =  models.ImageField(upload_to='company/', blank=True, null=True)
     website = models.URLField(blank=True, null=True)
+
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('company-update', kwargs={'pk': self.pk})
 
 class Puzzle(models.Model):
 

@@ -10,12 +10,11 @@ class AddCompanyForm(forms.ModelForm):
         fields = '__all__'
 
 class AddPuzzleForm(forms.ModelForm):
-    #COMPANIES = [(i.id, i) for i in Company.objects.all()]
-    #COMPANIES = [(1,1),(2,2)]
+
     name = forms.CharField(widget=forms.TextInput(), required=False)
     number_of_pieces = forms.CharField(widget=forms.TextInput())
     ean_code = forms.CharField(widget=forms.TextInput())
-    description = forms.CharField(widget=forms.TextInput())
+    description = forms.CharField(widget=forms.Textarea())
     #company = forms.ChoiceField(choices=COMPANIES)
     product_code = forms.CharField(widget=forms.TextInput())
     image = forms.ImageField(required=False)
