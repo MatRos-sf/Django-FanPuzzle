@@ -1,4 +1,5 @@
 {% extends 'frame.html' %}
+{% load simple_extra_tag %}
 
 {% block title %}Home{% endblock %}
 
@@ -87,7 +88,13 @@
 
   </div>
 
-
+    <h1>We have :
+        <p>{% number_company %}</p>
+    </h1>
+    {% get_most_popular_puzzle as most_popular_puzzle %}
+    {% for i in most_popular_puzzle %}
+        <p>{{ i }} {% cycle 'row1' 'row2' %}</p>
+    {% endfor %}
     {% for i in puzzle_list %}
         <p>{{ i }}<a href="{% url 'puzzle-detail' i.pk %}">d</a></p>
     {% empty %}
