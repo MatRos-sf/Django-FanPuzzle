@@ -14,7 +14,7 @@ urlpatterns = [
     path('import/', import_data, name='import'),
     path('update/puzzle/<int:pk>/', update_puzzle, name='puzzle-update'),
     path('update/company/<int:pk>/', update_company, name='company-update'),
-    path('list/$', search_puzzle, name='search'),
+    path('list/', search_puzzle, name='search'),
     path('search/', search_navibar, name='search-navi'),
 
 ]

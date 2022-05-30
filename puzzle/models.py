@@ -40,6 +40,8 @@ class Puzzle(models.Model):
     def delete(self, using=None, keep_parents=False):
         self.image.delete()
         super(Puzzle, self).delete()
+
+
     # def save(
     #     self, force_insert=False, force_update=False, using=None, update_fields=None
     # ):

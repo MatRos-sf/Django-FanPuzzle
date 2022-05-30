@@ -1,19 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'frame.html' %}
+{% block title %} {% endblock %}
+
+{% block content %}
     {% if name %}
-        <h1>You looked for {{ name }}. We found {{ searched.count }} results</h1>
-        {% for object in searched %}
-            <p>{{ object.name }}</p>
-        {% empty %}
-            <p1>We can't find this word in our database. </p1>
-        {% endfor %}
+        <h1>You looked for {{ name }}.</h1>
+        <p class="lead h6">
+            About {{ searched.count }} results ({{ searched_time }} seconds)
+        </p>
+        <div class="list-group">
+
+            {% for object in searched %}
+                <a href="{% url 'puzzle-detail' object.pk %}" class="list-group-item list-group-item-action list-group-item-danger" >
+                    <div class="d-flex w-100 justify-content-between">
+                      <h5 class="mb-1">{{ object.name }}</h5>
+                      <small class="text-muted"></small>
+                    </div>
+                    <p class="mb-1">{{ object.company }}</p>
+                    <small class="text-muted">{{ object.ean_code }}</small>
+                  </a>
+            {% empty %}
+                <p1>We can't find this word in our database. </p1>
+            {% endfor %}
+
     {% else %}
-        <h1> Nothing ;) </h1>
+        <h1> We need word  if we have to help you. </h1>
     {% endif %}
-</body>
-</html>
+
+    <h1>If you want searching with more details <a href="#" style="color: red">click here.</a></h1>
+{% endblock %}

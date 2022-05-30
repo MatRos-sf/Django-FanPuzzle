@@ -116,14 +116,18 @@ def search_puzzle(request):
     f = PuzzleFilter(request.GET, queryset=Puzzle.objects.all())
     return render(request, 'puzzle/search.html', {'filter': f})
 
+from time import time
 def search_navibar(request):
     # I wll do: About 4,930,000,000 results (0.69 seconds)
     if request.method == 'GET':
+        start = time()
         name = request.GET['name']
         searched = Puzzle.objects.filter(name__contains=name)
+        end = time()
         print(searched.count())
 
         return render(request, 'puzzle/simple_search.html', {'searched': searched,
-                                                             'name': name})
+                                                             'name': name,
+                                                             'searched_time': end-start})
 
     return render(request, 'puzzle/simple_search.html', {})
