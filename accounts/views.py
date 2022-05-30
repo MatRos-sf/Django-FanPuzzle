@@ -30,9 +30,15 @@ def login_view(request):
 
 
 def logout_view(request):
-    print(request)
-    logout(request)
-    return HttpResponse("<h1>Zostałeś wylogowany</h1>")
+
+    if request.user.is_authenticated:
+        logout(request)
+        return redirect('home')
+    else:
+        return render(request, 'accounts/simple_template.html', {
+            'title': 'Logout',
+            'commo': "You can't logout if you aren't login!"
+        })
 
 def create_user(request):
     #zrobić warunek zalogowany użytkownik nie może zakładać konta
