@@ -1,6 +1,7 @@
 from django import template
 from puzzle.models import Company, Puzzle
 from django.db.models import Count
+from accounts.models import Account
 
 
 register = template.Library()
@@ -25,3 +26,4 @@ def get_most_popular_puzzle(count=5):
     return Puzzle.objects.all()[:count]
 
 #pierwsze 100 znaków
+

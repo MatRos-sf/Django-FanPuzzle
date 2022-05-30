@@ -53,31 +53,34 @@ def add_company(request):
 
 # import from Jumbo
 def import_data(request):
-    forms = UrlJumbo()
-    if request.method == 'GET':
-        print(1)
-    if request.method == 'POST':
-        forms = UrlJumbo(request.POST)
-        if forms.is_valid():
-            cd = forms.cleaned_data
-            detail_information = information_with_jumbo(cd['url'])
-            # create model
-            try:
-                company_model = Company.objects.get(name=detail_information.pop('company'))
-            except ObjectDoesNotExist:
-                return HttpResponse("We support only company: .....")
-            # create model
-            try:
-                p = Puzzle.objects.create(company=company_model, **detail_information)
-            except IntegrityError:
-                p = Puzzle.objects.get(ean_code=detail_information['ean_code'])
-                return HttpResponse(f"{p} exist")
+    if not request.user.is_authenticated:
+        return HttpResponse(f"<h1>Zalogój się </h1>")
+    else:
+        forms = UrlJumbo()
+        if request.method == 'GET':
+            print(1)
+        if request.method == 'POST':
+            forms = UrlJumbo(request.POST)
+            if forms.is_valid():
+                cd = forms.cleaned_data
+                detail_information = information_with_jumbo(cd['url'])
+                # create model
+                try:
+                    company_model = Company.objects.get(name=detail_information.pop('company'))
+                except ObjectDoesNotExist:
+                    return HttpResponse("We support only company: .....")
+                # create model
+                try:
+                    p = Puzzle.objects.create(company=company_model, **detail_information)
+                except IntegrityError:
+                    p = Puzzle.objects.get(ean_code=detail_information['ean_code'])
+                    return HttpResponse(f"{p} exist")
 
-            return redirect('puzzle-detail', pk=p.id)
+                return redirect('puzzle-detail', pk=p.id)
+            else:
+                return render(request, 'puzzle/import/jumbo.html', {'forms': forms})
         else:
             return render(request, 'puzzle/import/jumbo.html', {'forms': forms})
-    else:
-        return render(request, 'puzzle/import/jumbo.html', {'forms': forms})
 
 
 #edit

@@ -72,7 +72,9 @@ TEMPLATES = [
     },
 ]
 
+#account
 AUTH_USER_MODEL = 'accounts.Account'
+#LOGIN_REDIRECT_URL = '/'
 
 WSGI_APPLICATION = 'fan_puzzle.wsgi.application'
 
