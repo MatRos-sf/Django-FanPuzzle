@@ -3,6 +3,7 @@
 This is simple template pattern:
     title -> it is title pattern
     commo -> it is communication
+    link ->  some  link
 -->
 
 
@@ -16,6 +17,7 @@ This is simple template pattern:
               <div class="col-4">
                 <h1 class="text-danger fw-bold">PuzzleFan</h1>
                 <p>{{ commo }}</p>
+                  <a href="{% url 'puzzle-detail'  link  %}">Here </a>
               </div>
 
               <div class="col-4 p-4">

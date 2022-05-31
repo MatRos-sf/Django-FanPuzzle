@@ -15,7 +15,7 @@ class HomeListView(ListView):
 
 class PuzzleDetail(DetailView):
     model = Puzzle
-    template_name = 'puzzle/user_detail.html'
+    template_name = 'puzzle/detail.html'
     context_object_name = 'puzzle'
 
 class CompanyDetail(DetailView):
@@ -74,7 +74,15 @@ def import_data(request):
                     p = Puzzle.objects.create(company=company_model, **detail_information)
                 except IntegrityError:
                     p = Puzzle.objects.get(ean_code=detail_information['ean_code'])
-                    return HttpResponse(f"{p} exist")
+                    title = "Error import: Exist!"
+                    text = "This puzzle is in our database."
+                    link =  p.pk
+                    #return HttpResponse(f"{p} exist")
+                    return render(request, 'accounts/simple_template.html', {
+                        'title': title,
+                        'text': text,
+                        'link': link
+                    })
 
                 return redirect('puzzle-detail', pk=p.id)
             else:

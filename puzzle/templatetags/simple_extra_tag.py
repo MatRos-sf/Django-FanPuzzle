@@ -29,5 +29,8 @@ def get_most_popular_puzzle(count=5):
     """
     return Puzzle.objects.all()[:count]
 
+@register.simple_tag
+def short_description(text,ammount=100):
+    return text[:ammount] +'...'
 #pierwsze 100 znaków
 
