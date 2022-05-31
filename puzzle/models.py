@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 class Company(models.Model):
 
-    name = models.CharField(max_length=150, unique=True)
+    name = models.CharField(max_length=150, unique=True, blank=False)
 
     fullname = models.CharField(max_length=250, blank=True, null=True)
     description = models.TextField(blank=True, null=False)
@@ -20,6 +20,7 @@ class Company(models.Model):
 
     def get_absolute_url(self):
         return reverse('company-update', kwargs={'pk': self.pk})
+
 
 class Puzzle(models.Model):
 
