@@ -7,6 +7,6 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('registration/', views.create_user, name='registration'),
     path('detail/<int:pk>/', views.UserDetail.as_view(), name='detail-user'),
-    # path('user-list/', ..., name='user-list')
+    path('user-list/', views.search_user, name='user-list')
 ]
 

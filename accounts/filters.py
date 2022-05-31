@@ -15,7 +15,7 @@ class UserFilter(django_filters.FilterSet):
     )
     username = django_filters.CharFilter(
         lookup_expr='exact',
-        label='Email',
+        label='Username',
         widget=forms.TextInput(attrs={'class': 'form-control'})
 
     )
