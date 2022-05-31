@@ -31,3 +31,4 @@ class CreateUserForm(forms.ModelForm):
         if cd['password'] != cd['passwordTwo']:
             raise forms.ValidationError('Password must be the same!')
         return cd['password']
+

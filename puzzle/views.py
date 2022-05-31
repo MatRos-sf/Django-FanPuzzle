@@ -15,7 +15,7 @@ class HomeListView(ListView):
 
 class PuzzleDetail(DetailView):
     model = Puzzle
-    template_name = 'puzzle/detail.html'
+    template_name = 'puzzle/user_detail.html'
     context_object_name = 'puzzle'
 
 class CompanyDetail(DetailView):

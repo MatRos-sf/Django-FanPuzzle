@@ -1,8 +1,11 @@
 from django.contrib.auth import logout, authenticate, login
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.views.generic import DetailView
+
 from .forms import LoginForms, CreateUserForm
 from django.contrib import messages
+from .models import Account
 
 # Create your views here.
 #https://stackoverflow.com/questions/65951430/django-login-says-invalid-password-even-for-correct-login-credential-even-though
@@ -55,4 +58,13 @@ def create_user(request):
     else:
         forms = CreateUserForm()
         return render(request, "accounts/register.html", {"forms": forms})
+from .filters import UserFilter
+def search_user(request):
+    f = UserFilter(request.GET, queryset=Account.objects.all())
+    return render(request, 'accounts/search.html', {'filter': f})
+
+class UserDetail(DetailView):
+    model = Account
+    template_name = 'accounts/user_detail.html'
+    context_object_name = 'user'
 
