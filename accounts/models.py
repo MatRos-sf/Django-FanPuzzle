@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-from puzzle.models import Puzzle
+
 #ma@wp.pl
 #https://docs.djangoproject.com/en/4.0/topics/auth/customizing/#specifying-a-custom-user-model
 class MyAccountManager(BaseUserManager):
@@ -31,6 +31,27 @@ class MyAccountManager(BaseUserManager):
         user.save(using=self._db)
 
 
+
+# def create_model():
+#     points = Points.objects.create()
+#     return points.pk
+
+class Points(models.Model):
+
+    for_add = models.IntegerField(default=0)
+    for_daily_login = models.IntegerField(default=1)
+    for_comments = models.IntegerField(default=0)
+    for_edit = models.IntegerField(default=0)
+    for_like = models.IntegerField(default=0)
+    for_visit = models.IntegerField(default=0)
+    for_bonus = models.IntegerField(default=0)
+
+    # def sum_points(self):
+    #     return sum([self.for_add, self.for_daily_login, self.for_comments, self.for_edit, self.for_like,
+    #                  self.for_visit, self.for_bonus])
+    # def __str__(self):
+    #     return f"{self.sum_points()}"
+
 class Account(AbstractBaseUser):
     email = models.EmailField(unique=True, verbose_name='email')
     username = models.CharField(max_length=30, unique=True)
@@ -39,6 +60,8 @@ class Account(AbstractBaseUser):
 
     #Profile
     description = models.TextField(max_length=800,blank=True, null=True)
+    #Warring if you makemigrations model first time this doesnt work!!
+    points = models.OneToOneField(Points, on_delete=models.CASCADE)
 
 
     is_admin = models.BooleanField(default=False)
@@ -60,4 +83,10 @@ class Account(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            self.points = Points.objects.create()
+        super().save(*args,**kwargs)
+
 

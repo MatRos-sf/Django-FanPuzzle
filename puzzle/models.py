@@ -22,24 +22,6 @@ class Company(models.Model):
         return reverse('company-update', args=[self.pk])
 
 
-class Points(models.Model):
-
-    for_add = models.IntegerField(default=0)
-    for_daily_login = models.IntegerField(default=1)
-    for_comments = models.IntegerField(default=0)
-    for_edit = models.IntegerField(default=0)
-    for_like = models.IntegerField(default=0)
-    for_visit = models.IntegerField(default=0)
-    for_bonus = models.IntegerField(default=0)
-
-    def sum_points(self):
-        return sum([self.for_add, self.for_daily_login, self.for_comments, self.for_edit, self.for_like,
-                     self.for_visit, self.for_bonus])
-    def __str__(self):
-        return f"{self.sum_points()}"
-
-
-
 class Puzzle(models.Model):
 
     name = models.CharField(max_length=200)
@@ -55,7 +37,7 @@ class Puzzle(models.Model):
     likes = models.ManyToManyField("accounts.Account", related_name='puzzle_like', blank=True)
     to_do = models.ManyToManyField("accounts.Account", related_name='to_do', blank=True)
     #points
-    #points = models.OneToOneField
+
 
     def __str__(self):
         return self.name
@@ -69,6 +51,7 @@ class Puzzle(models.Model):
 
     def number_of_to_do(self):
         return self.to_do.count()
+
 
     class Meta:
         ordering = ('-created',)

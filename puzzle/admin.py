@@ -9,3 +9,4 @@ class PuzzleClass(admin.ModelAdmin):
 @admin.register(Company)
 class PuzzleClass(admin.ModelAdmin):
     model = Company
+
