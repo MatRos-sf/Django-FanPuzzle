@@ -19,7 +19,10 @@ class Company(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('company-update', kwargs={'pk': self.pk})
+        return reverse('company-update', args=[self.pk])
+
+
+
 
 
 class Puzzle(models.Model):
@@ -33,14 +36,25 @@ class Puzzle(models.Model):
     image = models.ImageField(upload_to='images/', blank=True, null=True)
     website = models.URLField(blank=True, null=True)
     created = models.DateField(auto_now_add=True)
-
-
+    #https://dev.to/radualexandrub/how-to-add-like-unlike-button-to-your-django-blog-5gkg
+    likes = models.ManyToManyField("accounts.Account", related_name='puzzle_like', blank=True)
+    to_do = models.ManyToManyField("accounts.Account", related_name='to_do', blank=True)
     def __str__(self):
         return self.name
 
     def delete(self, using=None, keep_parents=False):
         self.image.delete()
         super(Puzzle, self).delete()
+
+    def number_of_likes(self):
+        return self.likes.count()
+
+    def number_of_to_do(self):
+        return self.to_do.count()
+
+    class Meta:
+        ordering = ('-created',)
+
 
 
     # def save(

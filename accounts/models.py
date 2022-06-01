@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from puzzle.models import Puzzle
 #ma@wp.pl
 #https://docs.djangoproject.com/en/4.0/topics/auth/customizing/#specifying-a-custom-user-model
 class MyAccountManager(BaseUserManager):
@@ -35,11 +36,17 @@ class Account(AbstractBaseUser):
     username = models.CharField(max_length=30, unique=True)
     date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
     last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
+
+    #Profile
+    description = models.TextField(max_length=800,blank=True, null=True)
+
+
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    #description, profile picture , add fotoo, like , to  do
+
+    # profile picture , add fotoo,
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']          #co jest nam potrzebne
 

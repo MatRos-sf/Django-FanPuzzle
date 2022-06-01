@@ -55,9 +55,13 @@ def create_user(request):
             new_user.save()
             login(request, new_user)
             return redirect('home')
+        else:
+            print("something wrong")
     else:
         forms = CreateUserForm()
         return render(request, "accounts/register.html", {"forms": forms})
+    return render(request, "accounts/register.html", {"forms": forms})
+
 from .filters import UserFilter
 def search_user(request):
     f = UserFilter(request.GET, queryset=Account.objects.all())

@@ -1,14 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <form method="post">
-        {% csrf_token %}
-        {{ forms.as_p }}
-        <input type="submit" >
-    </form>
-</body>
-</html>
+
+{% extends 'frame.html' %}
+
+{% block title %}
+Registration
+{% endblock %}
+
+{% block content %}
+
+    <div class="container p-5">
+
+          <div class="row justify-content-center">
+
+              <div class="col-4">
+                <h1 class="text-danger fw-bold m-5 p-5">PuzzleFan</h1>
+              </div>
+
+              <div class="col-4 p-4">
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <form method="post">
+                        {% csrf_token %}
+                            {% for i in messages %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ i }}
+                                </div>
+                            {% endfor %}
+
+                            <div class="mb-3">
+                                {% for i in forms %}
+                                    {{ i }}
+                                    {{ i.errors }}
+                                {% endfor %}
+                                <input class="btn btn-outline-danger" type="submit" value="Create" size="" style="width:100%">
+                            </div>
+                    </form>
+
+                </div>
+              </div>
+
+          </div>
+
+        </div>
+{% endblock %}
+

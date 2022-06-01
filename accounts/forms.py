@@ -20,8 +20,20 @@ class LoginForms(forms.Form):
 
 class CreateUserForm(forms.ModelForm):
 
-    password = forms.CharField(label='Password', widget=forms.PasswordInput())
-    passwordTwo = forms.CharField(label='Repeat Password', widget=forms.PasswordInput())
+    password = forms.CharField(label='Password', widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'placeholder': 'Password'}
+    ))
+    passwordTwo = forms.CharField(label='Repeat Password', widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'placeholder': 'Repeat Password'}
+    ))
+
+    email = forms.EmailField(widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Email'})
+    )
+    username = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Username'})
+    )
+
     class Meta:
         model = Account
         fields = ('email', 'username', )
