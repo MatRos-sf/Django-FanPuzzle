@@ -1,4 +1,5 @@
 from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import DetailView
@@ -69,6 +70,7 @@ def create_user(request):
     return render(request, "accounts/register.html", {"forms": forms})
 
 from .filters import UserFilter
+@login_required(login_url='/account/login/')
 def search_user(request):
     f = UserFilter(request.GET, queryset=Account.objects.all())
     return render(request, 'accounts/search.html', {'filter': f})
