@@ -16,7 +16,7 @@ Login
 
               <div class="col-4 p-4">
                 <div class="d-grid gap-2 col-6 mx-auto">
-                    <form method="post">
+                    <form method="post" action="{% url 'my_app_account:login' %}">
                         {% csrf_token %}
                             {% for i in messages %}
                                 <div class="alert alert-danger" role="alert">
@@ -31,6 +31,9 @@ Login
                                 {% endfor %}
                                 <input class="btn btn-outline-danger" type="submit" value="Login" size="" style="width:100%">
                             </div>
+                        {% if request.GET.next %}
+                            <input type="hidden" name="next" value="{{ request.GET.next }}">
+                        {% endif %}
                     </form>
                     <p class="text-center fs-6 fst-italic text-danger m-1">Forgot password?</p>
                     <hr class="m-1 featurette-divider ">

@@ -32,3 +32,6 @@ class TestUrls(SimpleTestCase):
     def test_search_resolves(self):
         url = reverse('search')
         self.assertEqual(resolve(url).func, views.search_puzzle)
+    def test_search_navibar_resolves(self):
+        url = reverse('search-navi')
+        self.assertEqual(resolve(url).func, views.search_navibar)

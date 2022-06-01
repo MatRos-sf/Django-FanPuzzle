@@ -21,10 +21,16 @@ def login_view(request):
 
             if user is not None:
                 login(request, user)
+                #next/
+                if 'next' in request.POST:
+                    return redirect(request.POST.get('next'))
                 return redirect('home')
             else:
                 #return HttpResponse("<h1>Something wrong!</h1>")
                 messages.error(request,  "Email or password is incorrect")
+            #next
+            if 'next' in request.POST:
+                return redirect(request.POST.get("next"))
 
     else:
         return render(request, 'accounts/login.html', {'forms': forms})
