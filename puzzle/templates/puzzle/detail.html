@@ -55,6 +55,20 @@
                 {% endif %}
             </form>
             <strong class="text-secondary">{{ number_of_to_do }} To do </strong>
+                <!-- Finished -->
+            <form  action="{% url 'puzzle_finished_view' puzzle.id  %}" method="POST">
+                {% csrf_token %}
+                {% if puzzle_is_finished %}
+                    <button type="submit" name="puzzle_finished" value="{{ puzzle.id }}" class="btn btn-danger">
+                            +
+                    </button>
+                {% else %}
+                    <button type="submit" name="puzzle_finished" value="{{puzzle.id}}" class="btn btn-outline-danger">
+                        -
+                    </button>
+                {% endif %}
+            </form>
+            <strong class="text-secondary">{{ number_of_finished }} Finished </strong>
 
             {% endif %}
 

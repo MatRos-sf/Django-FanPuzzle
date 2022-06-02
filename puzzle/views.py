@@ -41,6 +41,13 @@ class PuzzleDetail(DetailView):
         data['number_of_to_do'] = content.number_of_to_do()
         data['puzzle_is_to_do'] = to_do
 
+        #finished
+        finished = False
+        if content.finished.filter(id=self.request.user.pk).exists():
+            finished = True
+        data['number_of_finished'] = content.number_of_finished()
+        data['puzzle_is_finished'] = finished
+
         return data
 
 
@@ -202,7 +209,10 @@ def puzzle_to_do(request,pk):
         puzzle.to_do.add(request.user)
     return HttpResponseRedirect(reverse('puzzle-detail', args=[str(pk)]))
 
-def puzzle_done(request, pk):
+def puzzle_finished(request, pk):
     puzzle = get_object_or_404(Puzzle, id=request.POST.get('puzzle_finished'))
-
+    if puzzle.finished.filter(id=request.user.id).exists():
+        puzzle.finished.remove(request.user)
+    else:
+        puzzle.finished.add(request.user)
     return HttpResponseRedirect(reverse('puzzle-detail', args=[str(pk)]))
