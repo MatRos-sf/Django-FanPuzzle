@@ -11,13 +11,24 @@ class AddCompanyForm(forms.ModelForm):
 
 class AddPuzzleForm(forms.ModelForm):
 
-    name = forms.CharField(widget=forms.TextInput(), required=False)
-    number_of_pieces = forms.CharField(widget=forms.TextInput())
-    ean_code = forms.CharField(widget=forms.TextInput())
-    description = forms.CharField(widget=forms.Textarea())
+    name = forms.CharField(required=False, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Name'}
+    ))
+    number_of_pieces = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Number of pieces'}
+    ))
+    ean_code = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Ean code'}
+    ))
+    description = forms.CharField(widget=forms.Textarea(
+        attrs={'class': 'form-control', 'placeholder': 'Description'}
+    ))
     #company = forms.ChoiceField(choices=COMPANIES)
-    product_code = forms.CharField(widget=forms.TextInput())
+    product_code = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Product code'}
+    ))
     image = forms.ImageField(required=False)
+
     class Meta:
         model = Puzzle
         fields = ["name", "number_of_pieces", "ean_code", "description", "product_code", "image", 'company']
@@ -30,7 +41,10 @@ class AddPuzzleForm(forms.ModelForm):
     #     return cd
 
 class UrlJumbo(forms.Form):
-    url = forms.CharField(required=False)
+    url = forms.CharField(required=False, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Url'}
+
+    ))
     #must be: https://www.jumbo.eu/en/products/
 
     def clean(self):

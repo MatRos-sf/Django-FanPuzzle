@@ -30,27 +30,33 @@ class MyAccountManager(BaseUserManager):
         user.is_superuser = True
         user.save(using=self._db)
 
-
-
-# def create_model():
-#     points = Points.objects.create()
-#     return points.pk
-
 class Points(models.Model):
 
     for_add = models.IntegerField(default=0)
+    amt_adds = models.IntegerField(default=0)
+
     for_daily_login = models.IntegerField(default=1)
+
     for_comments = models.IntegerField(default=0)
+    amt_comments = models.IntegerField(default=0)
+
     for_edit = models.IntegerField(default=0)
+    amt_edits = models.IntegerField(default=0)
+
     for_like = models.IntegerField(default=0)
+    amt_likes = models.IntegerField(default=0)
+
     for_visit = models.IntegerField(default=0)
+    amt_visits = models.IntegerField(default=0)
+
     for_bonus = models.IntegerField(default=0)
 
-    # def sum_points(self):
-    #     return sum([self.for_add, self.for_daily_login, self.for_comments, self.for_edit, self.for_like,
-    #                  self.for_visit, self.for_bonus])
-    # def __str__(self):
-    #     return f"{self.sum_points()}"
+
+    def sum_points(self):
+        return sum([self.for_add, self.for_daily_login, self.for_comments, self.for_edit, self.for_like,
+                     self.for_visit, self.for_bonus])
+    def __str__(self):
+        return f"{self.sum_points()}"
 
 class Account(AbstractBaseUser):
     email = models.EmailField(unique=True, verbose_name='email')

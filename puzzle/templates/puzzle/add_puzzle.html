@@ -7,14 +7,14 @@
 <div class="container">
   <div class="row">
     <div class="col-md-6 offset-md-3">
+        <center><h1 class="p-5" style="color: #dc3545">{{ title }}</h1></center>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-3">
                 {% for i in forms %}
-                    <label class="form-label">{{ i.label }}</label>
                     <p> {{ i }}</p>
                 {% endfor %}
-                <input class="btn btn-secondary" type="submit" value="Save">
+                <input class="btn btn-danger" type="submit" value="Save">
             </div>
         </form>
         {% if forms.errors %}

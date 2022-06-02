@@ -5,6 +5,9 @@ from .models import Puzzle, Company
 from .forms import AddPuzzleForm, AddCompanyForm, UrlJumbo
 from .information_with_website.jumbo import information_with_jumbo
 from django.http import HttpResponse
+# points function
+from accounts.points import point_for_add_puzzle, point_for_edit
+
 #login
 from django.contrib.auth.decorators import login_required
 #errors
@@ -33,27 +36,37 @@ def add_puzzle(request):
         if forms.is_valid():
             cd = forms.cleaned_data
             company = cd.pop('company')
-            puzzle = Puzzle.objects.create(company=company,**cd)
+            puzzle = Puzzle.objects.create(company=company, **cd)
+            point_for_add_puzzle(request.user.points)
             return redirect('puzzle-detail', pk=puzzle.pk)
         else:
-            return render(request, 'puzzle/add_puzzle.html', {"forms": forms})
-    else:
-        return render(request, 'puzzle/add_puzzle.html', {"forms": forms})
+            return render(request, 'puzzle/add_puzzle.html', {"forms": forms,
+                                                              'title': 'Add puzzle'})
+
+    return render(request, 'puzzle/add_puzzle.html', {"forms": forms,
+                                                      'title': 'Add puzzle'})
+
 @login_required(login_url='/account/login/')
 def add_company(request):
-    #I use the same template: add_puzzle
+    #I use the same template: add_puzzle,
+    #Only admin can add company
+    if request.user.is_admin:
 
-    forms = AddCompanyForm()
-    if request.method == 'POST':
-        forms = AddCompanyForm(request.POST)
-        if forms.is_valid():
-            cd = forms.cleaned_data
-            company = Company.objects.create(**cd)
-            return redirect('home')
+        forms = AddCompanyForm()
+        if request.method == 'POST':
+            forms = AddCompanyForm(request.POST)
+            if forms.is_valid():
+                cd = forms.cleaned_data
+                company = Company.objects.create(**cd)
+                return redirect('home')
+            else:
+                return render(request, 'puzzle/add_puzzle.html', {"forms": forms})
         else:
             return render(request, 'puzzle/add_puzzle.html', {"forms": forms})
     else:
-        return render(request, 'puzzle/add_puzzle.html', {"forms": forms})
+
+        return render(request, "puzzle/information.html", {'title': "Permission",
+                                                           'commo': "You don't have permission."})
 
 # import from Jumbo
 @login_required(login_url='/account/login/')
@@ -61,10 +74,9 @@ def import_data(request):
     # if not request.user.is_authenticated:
     #     forms = UrlJumbo()
     #     return render(request, 'puzzle/import/jumbo.html', {'forms': forms})
-
     forms = UrlJumbo()
     if request.method == 'GET':
-        print(1)
+            print(1)
     if request.method == 'POST':
         forms = UrlJumbo(request.POST)
         if forms.is_valid():
@@ -83,7 +95,6 @@ def import_data(request):
                 title = "Error import: Exist!"
                 text = "This puzzle is in our database."
                 link =  p.pk
-                #return HttpResponse(f"{p} exist")
                 return render(request, 'accounts/simple_template.html', {
                     'title': title,
                     'text': text,
@@ -107,6 +118,7 @@ def update_puzzle(request, pk):
     if request.method == 'POST':
         if form.is_valid():
             form.save()
+            point_for_edit(request.user.points)
             return redirect('puzzle-detail', pk=p.pk)
         else:
             return HttpResponse("<h1>Smth is wrong </h1>")
