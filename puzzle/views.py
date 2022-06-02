@@ -204,4 +204,5 @@ def puzzle_to_do(request,pk):
 
 def puzzle_done(request, pk):
     puzzle = get_object_or_404(Puzzle, id=request.POST.get('puzzle_finished'))
+
     return HttpResponseRedirect(reverse('puzzle-detail', args=[str(pk)]))

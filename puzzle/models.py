@@ -36,6 +36,7 @@ class Puzzle(models.Model):
     #https://dev.to/radualexandrub/how-to-add-like-unlike-button-to-your-django-blog-5gkg
     likes = models.ManyToManyField("accounts.Account", related_name='puzzle_like', blank=True)
     to_do = models.ManyToManyField("accounts.Account", related_name='to_do', blank=True)
+    finished = models.ManyToManyField("accounts.Account", related_name="puzzle_finished", blank=True)
     #points
 
 
@@ -52,6 +53,8 @@ class Puzzle(models.Model):
     def number_of_to_do(self):
         return self.to_do.count()
 
+    def number_of_finished(self):
+        return self.finished.count()
 
     class Meta:
         ordering = ('-created',)
