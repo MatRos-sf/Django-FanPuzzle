@@ -4,7 +4,7 @@ from django.views.generic.detail import DetailView
 from .models import Puzzle, Company
 from .forms import AddPuzzleForm, AddCompanyForm, UrlJumbo
 from .information_with_website.jumbo import information_with_jumbo
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 # points function
 from accounts.points import point_for_add_puzzle, point_for_edit
 
@@ -22,6 +22,28 @@ class PuzzleDetail(DetailView):
     model = Puzzle
     template_name = 'puzzle/detail.html'
     context_object_name = 'puzzle'
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+
+        #likes
+        content = get_object_or_404(Puzzle, id=self.kwargs['pk'])
+        liked = False
+        if content.likes.filter(id=self.request.user.pk).exists():
+            liked = True
+        data['number_of_likes'] = content.number_of_likes()
+        data['puzzle_is_liked'] = liked
+
+        #to do
+        to_do = False
+        if content.to_do.filter(id=self.request.user.pk).exists():
+            to_do = True
+        data['number_of_to_do'] = content.number_of_to_do()
+        data['puzzle_is_to_do'] = to_do
+
+        return data
+
+
 
 class CompanyDetail(DetailView):
     model = Company
@@ -160,3 +182,26 @@ def search_navibar(request):
                                                              'searched_time': end-start})
 
     return render(request, 'puzzle/simple_search.html', {})
+
+#LIKE
+from django.urls import reverse
+def puzzle_like(request,pk):
+    puzzle = get_object_or_404(Puzzle, id=request.POST.get('puzzle_like'))
+    if puzzle.likes.filter(id=request.user.id).exists():
+        puzzle.likes.remove(request.user)
+    else:
+        puzzle.likes.add(request.user)
+
+    return HttpResponseRedirect(reverse('puzzle-detail', args=[str(pk)]))
+# to do
+def puzzle_to_do(request,pk):
+    puzzle = get_object_or_404(Puzzle, id=request.POST.get('puzzle_to_do'))
+    if puzzle.to_do.filter(id=request.user.id).exists():
+        puzzle.to_do.remove(request.user)
+    else:
+        puzzle.to_do.add(request.user)
+    return HttpResponseRedirect(reverse('puzzle-detail', args=[str(pk)]))
+
+def puzzle_done(request, pk):
+    puzzle = get_object_or_404(Puzzle, id=request.POST.get('puzzle_finished'))
+    return HttpResponseRedirect(reverse('puzzle-detail', args=[str(pk)]))
