@@ -8,23 +8,26 @@ from django.http import HttpResponse
 def image_create(request):
     if request.method == 'POST':
         # Formularz został wysłany.
-        form = ImageCreateForm(data=request.POST)
-        if form.is_valid():
+        forms = ImageCreateForm(request.POST, request.FILES)
+        if forms.is_valid():
             # Dane formularza są prawidłowe.
-            cd = form.cleaned_data
-            new_item = form.save(commit=False)
+            cd = forms.cleaned_data
+            print(cd)
+            new_item = forms.save(commit=False)
+            print(2)
             # Przypisanie bieżącego użytkownika do elementu.
             new_item.user = request.user
             new_item.save()
+            print("add photo")
             messages.success(request, 'Obraz został dodany.')
             # Przekierowanie do widoku szczegółowego dla nowo utworzonego elementu.
             #return redirect(new_item.get_absolute_url())
             return HttpResponse("<h1>;)</h1>")
     else:
         # Utworzenie formularza na podstawie danych dostarczonych przez bookmarklet w żądaniu GET.
-        form = ImageCreateForm(data=request.GET)
+        forms = ImageCreateForm(data=request.GET)
 
     return render(request,
                   'image/create.html',
                   {'section': 'images',
-                   'form': form})
+                   'forms': forms})

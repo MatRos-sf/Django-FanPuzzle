@@ -5,6 +5,13 @@ from django.core.files.base import ContentFile
 from django.utils.text import slugify
 
 class ImageCreateForm(forms.ModelForm):
+    title = forms.CharField(required=False, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Name'}
+    ))
+    description = forms.CharField(required=False, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'description'}
+    ))
+
 
     # def clean_url(self):
     #     url = self.cleaned_data['url']
@@ -35,7 +42,7 @@ class ImageCreateForm(forms.ModelForm):
     class Meta:
         model = Image
         # fields = ('title', 'description')
-        fields = '__all__'
+        fields = ('title','description', 'image',)
         # widgets = {
         #     'url': forms.HiddenInput,
         # }

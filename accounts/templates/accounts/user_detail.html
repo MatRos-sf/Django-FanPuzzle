@@ -9,13 +9,19 @@
     <div class="row featurette p-5">
       <div class="col-md-5">
         <h2 class="featurette-heading"> {{ user.username }} </h2>
-          <hr class="featurette-divider">
+          <h3 class="fs-4 fst-italic" style="color: #dc3545"> {{ user.points.sum_points }} points</h3>
+          <hr class="featurette-divider" style="color: #dc3545">
             <p class="lead">Email: {{ user.email }}</p>
             <p class="lead">Joined: {{ user.date_joined }}</p>
             <p class="lead">Last Login: {{ user.last_login }}</p>
-          <hr class="featurette-divider">
-<!--          <p class="lead">{{ puzzle.description }}</p>-->
-<!--          <p class="lead-bold text-center"> {{ puzzle.company }}</p>-->
+
+          <hr class="featurette-divider" style="color: #dc3545">
+          <p class="lead">{{ user.description }}</p>
+
+          <hr class="featurette-divider" style="color: #dc3545">
+          <p class="lead "> Polajkował: {{ user.puzzle_like.count }}</p>
+          <p class="lead "> Do ułożenia ma: {{ user.to_do.count }}</p>
+          <p class="lead "> Polajkował: {{ user.puzzle_finished.count }}</p>
 
 
       </div>
@@ -31,6 +37,16 @@
           <h1> We are working on it.</h1>
 
       </div>
+         <hr class="featurette-divider" style="color: #dc3545">
+        <h1>Dodał {{ user.user_photos.count }} zdjęć.</h1>
+        <a class="btn btn-danger" href="{% url 'image:add' %}">
+            Add Photo
+        </a>
+        {% for photo in user.user_photos.all %}
+            <img src="{{ photo.image.url }}" class="rounded-0"  alt="...">
+        {% endfor %}
+
+
     </div>
 
 

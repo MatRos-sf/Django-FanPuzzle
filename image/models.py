@@ -11,7 +11,6 @@ class Image(models.Model):
     created = models.DateField(auto_now_add=True)
     image = models.ImageField(upload_to='user_photo/',
                               db_index=True)
-    photos = models.ForeignKey('accounts.Account', related_name='photos', on_delete=models.CASCADE)
     photo_like = models.ManyToManyField('accounts.Account',
                                         related_name='photo_like',
                                         blank=True)

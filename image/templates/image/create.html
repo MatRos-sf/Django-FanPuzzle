@@ -1,10 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Create</title>
-</head>
-<body>
+{% extends 'frame.html' %}
 
-</body>
-</html>
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+        <center><h1 class="p-5" style="color: #dc3545">{{ title }}</h1></center>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                {% for i in forms %}
+                    <p> {{ i }}</p>
+                {% endfor %}
+                <input class="btn btn-danger" type="submit" value="Save">
+            </div>
+        </form>
+        {% if forms.errors %}
+           {% for field in forms %}
+              {% for error in field.errors %}
+                  {{ error|escape }}
+              {% endfor %}
+           {% endfor %}
+        {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
