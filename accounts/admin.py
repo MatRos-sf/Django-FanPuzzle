@@ -8,3 +8,4 @@ admin.site.register(Account)
 @admin.register(Points)
 class PointsClass(admin.ModelAdmin):
     model = Points
+

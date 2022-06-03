@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'puzzle',
+    'image',
     # filter
     'django_filters',
+
 
 ]
 

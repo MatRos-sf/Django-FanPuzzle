@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 #ma@wp.pl
 #https://docs.djangoproject.com/en/4.0/topics/auth/customizing/#specifying-a-custom-user-model
+
 class MyAccountManager(BaseUserManager):
     def create_user(self, email, username, password=None):  #must add all REQUIRED_FIELDS
         if not email:
@@ -68,6 +69,8 @@ class Account(AbstractBaseUser):
     description = models.TextField(max_length=800,blank=True, null=True)
     #Warring if you makemigrations model first time this doesnt work!!
     points = models.OneToOneField(Points, on_delete=models.CASCADE)
+    # user Image
+
 
 
     is_admin = models.BooleanField(default=False)
