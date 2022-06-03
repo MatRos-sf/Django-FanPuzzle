@@ -25,14 +25,25 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
 
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'puzzle-add'%}">Add</a>
-            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAdd" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Add
+              </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li>
+                    <a class="dropdown-item" aria-current="page" href="{% url 'puzzle-add'%}">Puzzle</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="{% url 'puzzle-add-company'%}">Company</a>
+                  </li>
+              </ul>
 
+            </li>
+            <!-- IMPORT -->
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="{% url 'import' %}">Import</a>
             </li>
-
+            <!-- SEARCH -->
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Search
