@@ -23,7 +23,6 @@ class ProfilePhoto(models.Model):
                              on_delete=models.CASCADE)
     created = models.DateField(auto_now_add=True)
     image = models.ImageField(upload_to='user_profile_photo/',
-                              blank=True,
                               default='user_profile_photo/default.jpg'
                               )
 

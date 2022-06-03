@@ -8,6 +8,18 @@ class AddCompanyForm(forms.ModelForm):
     class Meta:
         model = Company
         fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Name'}),
+            'fullname': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Full name'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Description'}),
+            'country': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Country'}),
+            'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'City'}),
+            'email': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone Number'}),
+            'website':  forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Website'}),
+        }
+    # To do sprawdzenie pola email, phone number , i website
+
 
 class AddPuzzleForm(forms.ModelForm):
 
