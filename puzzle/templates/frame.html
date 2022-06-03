@@ -48,8 +48,19 @@
               My account
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Account</a></li>
-                <li><a class="dropdown-item" href="{% url 'my_app_account:logout' %}">Logout</a></li>
+                {% if user.is_authenticated %}
+
+                <li><a class="dropdown-item" href="{% url 'my_app_account:detail-user' user.pk %}">Account</a></li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'my_app_account:logout' %}">Logout</a>
+                </li>
+
+                {% else %}
+                    <li>
+                      <a class="dropdown-item" href="{% url 'my_app_account:login' %}">Login</a>
+                    </li>
+                {% endif %}
+
               </ul>
             </li>
 
