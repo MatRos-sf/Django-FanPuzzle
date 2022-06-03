@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
+
 #ma@wp.pl
 #https://docs.djangoproject.com/en/4.0/topics/auth/customizing/#specifying-a-custom-user-model
 
@@ -96,6 +97,7 @@ class Account(AbstractBaseUser):
     def save(self, *args, **kwargs):
         if self.pk is None:
             self.points = Points.objects.create()
+
         super().save(*args,**kwargs)
 
 

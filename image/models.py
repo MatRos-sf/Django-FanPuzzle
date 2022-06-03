@@ -18,3 +18,14 @@ class Image(models.Model):
     def __str__(self):
         return self.title
 
+class ProfilePhoto(models.Model):
+    user = models.OneToOneField('accounts.Account',
+                             related_name='user_profile_photo',
+                             on_delete=models.CASCADE)
+    created = models.DateField(auto_now_add=True)
+    image = models.ImageField(upload_to='user_profile_photo/',
+                              blank=True,
+                              default='user_profile_photo/default.jpg'
+                              )
+
+
