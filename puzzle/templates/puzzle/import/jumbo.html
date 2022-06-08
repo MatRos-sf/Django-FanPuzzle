@@ -6,16 +6,24 @@
 <div class="container">
   <div class="row">
     <div class="col-md-6 offset-md-3">
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="mb-3">
-                {% for i in forms %}
-                    <label class="form-label">{{ i.label }}</label>
-                    <p> {{ i }}</p>
-                {% endfor %}
-                <input class="btn btn-secondary" type="submit" value="Save">
-            </div>
-        </form>
+        <h1 style="color: #dc3545">Import puzzle with url</h1>
+        <p class="fs-6 fw-light" style="color: #dc3545">*It's BETA version we support only the Jumbo official website.</p>
+        <p>Steps:</p>
+        <li style="list-style-type: none">1. Get url: e.g:</li>
+        <li style="list-style-type: none"> https://www.jumbo.eu/en/products/falcon-the-vegetable-garden-1000-pieces/</li>
+        <li style="list-style-type: none">2.Past in  field and click Save</li>
+        <center>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {% for i in forms %}
+                        <p> {{ i }}</p>
+                    {% endfor %}
+                    <input class="btn btn-danger" type="submit" value="Save">
+                </div>
+            </form>
+        </center>
+
         {% if forms.errors %}
            {% for field in forms %}
               {% for error in field.errors %}

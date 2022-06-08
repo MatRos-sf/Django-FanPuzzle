@@ -1,0 +1,38 @@
+{% extends "frame.html" %}
+{% block title %}Search{% endblock %}
+{% block content %}
+    <center>
+    <h1 class="p-5">Find user</h1>
+
+            <div class="row g-3">
+                <form method="get">
+                    {% for f in filter.form %}
+                        <div class="col-md-6">
+                            {{ f.label  }}
+                            {{ f }}
+                        </div>
+                    {% endfor %}
+                    <input type="submit" value="Search" class="btn btn-outline-danger"/>
+                </form>
+            </div>
+    </center>
+    <center class="p-5">
+        <h1>Result</h1>
+        <div class="list-group">
+            {% for object in filter.qs %}
+                <a href="{% url 'my_app_account:detail-user' object.pk %}" class="list-group-item list-group-item-action list-group-item-danger" >
+                    <div class="d-flex w-100 justify-content-between">
+                      <h5 class="mb-1">{{ object.username }}</h5>
+                      <small class="text-muted"></small>
+                    </div>
+                    <p class="mb-1">{{ object.email }}</p>
+                    <small class="text-muted">{{ object.date_joined }}</small>
+                  </a>
+            {% endfor %}
+
+
+        </div>
+
+    </center>
+
+{% endblock %}

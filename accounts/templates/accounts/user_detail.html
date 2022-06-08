@@ -1,0 +1,61 @@
+{% extends 'frame.html' %}
+
+{% block title %}User detail: {{ user.id }}{% endblock %}
+
+
+{% block content %}
+
+
+    <div class="row featurette p-5">
+      <div class="col-md-5">
+        <h2 class="featurette-heading"> {{ user.username }} </h2>
+          <h3 class="fs-4 fst-italic" style="color: #dc3545"> {{ user.points.sum_points }} points</h3>
+          <hr class="featurette-divider" style="color: #dc3545">
+            <p class="lead">Email: {{ user.email }}</p>
+            <p class="lead">Joined: {{ user.date_joined }}</p>
+            <p class="lead">Last Login: {{ user.last_login }}</p>
+
+          <hr class="featurette-divider" style="color: #dc3545">
+          <p class="lead">{{ user.description }}</p>
+
+          <hr class="featurette-divider" style="color: #dc3545">
+          <p class="lead "> Polajkował: {{ user.puzzle_like.count }}</p>
+          <p class="lead "> Do ułożenia ma: {{ user.to_do.count }}</p>
+          <p class="lead "> Polajkował: {{ user.puzzle_finished.count }}</p>
+
+
+      </div>
+      <div class="col-md-6">
+<!--        {% if puzzle.image %}-->
+<!--              <img src="{{ puzzle.image.url }}" class="img-fluid" alt="{{ puzzle.image.name }}">-->
+<!--        {% else %}-->
+<!--          <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">-->
+<!--                <title>Placeholder</title>-->
+<!--                <rect width="100%" height="100%" fill="#eee" ></rect>-->
+<!--            </svg>-->
+<!--        {% endif %}-->
+          <h1> We are working on it.</h1>
+
+      </div>
+         <hr class="featurette-divider" style="color: #dc3545">
+        <h1>Dodał {{ user.user_photos.count }} zdjęć.</h1>
+        <a class="btn btn-danger" href="{% url 'image:add' %}">
+            Add Photo
+        </a>
+
+          {% for photo in user.user_photos.all %}
+            <div class="card" style="width: 18rem;">
+              <img src="{{ photo.image.url }}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+
+{% endblock %}

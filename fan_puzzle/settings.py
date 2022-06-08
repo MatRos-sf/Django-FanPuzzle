@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,8 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'puzzle',
+    'image',
     # filter
     'django_filters',
+
+
 ]
 
 MIDDLEWARE = [
@@ -69,6 +73,10 @@ TEMPLATES = [
         },
     },
 ]
+
+#account
+AUTH_USER_MODEL = 'accounts.Account'
+#LOGIN_REDIRECT_URL = '/'
 
 WSGI_APPLICATION = 'fan_puzzle.wsgi.application'
 

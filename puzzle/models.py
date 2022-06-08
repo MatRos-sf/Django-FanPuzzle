@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 class Company(models.Model):
 
-    name = models.CharField(max_length=150, unique=True)
+    name = models.CharField(max_length=150, unique=True, blank=False)
 
     fullname = models.CharField(max_length=250, blank=True, null=True)
     description = models.TextField(blank=True, null=False)
@@ -19,7 +19,8 @@ class Company(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('company-update', kwargs={'pk': self.pk})
+        return reverse('company-update', args=[self.pk])
+
 
 class Puzzle(models.Model):
 
@@ -32,6 +33,11 @@ class Puzzle(models.Model):
     image = models.ImageField(upload_to='images/', blank=True, null=True)
     website = models.URLField(blank=True, null=True)
     created = models.DateField(auto_now_add=True)
+    #https://dev.to/radualexandrub/how-to-add-like-unlike-button-to-your-django-blog-5gkg
+    likes = models.ManyToManyField("accounts.Account", related_name='puzzle_like', blank=True)
+    to_do = models.ManyToManyField("accounts.Account", related_name='to_do', blank=True)
+    finished = models.ManyToManyField("accounts.Account", related_name="puzzle_finished", blank=True)
+    #points
 
 
     def __str__(self):
@@ -40,6 +46,21 @@ class Puzzle(models.Model):
     def delete(self, using=None, keep_parents=False):
         self.image.delete()
         super(Puzzle, self).delete()
+
+    def number_of_likes(self):
+        return self.likes.count()
+
+    def number_of_to_do(self):
+        return self.to_do.count()
+
+    def number_of_finished(self):
+        return self.finished.count()
+
+    class Meta:
+        ordering = ('-created',)
+
+
+
     # def save(
     #     self, force_insert=False, force_update=False, using=None, update_fields=None
     # ):

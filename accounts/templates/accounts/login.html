@@ -1,0 +1,50 @@
+{% extends 'frame.html' %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block content %}
+
+    <div class="container p-5">
+
+          <div class="row justify-content-center">
+
+              <div class="col-4">
+                <h1 class="text-danger fw-bold m-5 p-5">PuzzleFan</h1>
+              </div>
+
+              <div class="col-4 p-4">
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <form method="post" action="{% url 'my_app_account:login' %}">
+                        {% csrf_token %}
+                            {% for i in messages %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ i }}
+                                </div>
+                            {% endfor %}
+
+                            <div class="mb-3">
+                                {% for i in forms %}
+                                    {{ i }}
+                                    {{ i.errors }}
+                                {% endfor %}
+                                <input class="btn btn-outline-danger" type="submit" value="Login" size="" style="width:100%">
+                            </div>
+                        {% if request.GET.next %}
+                            <input type="hidden" name="next" value="{{ request.GET.next }}">
+                        {% endif %}
+                    </form>
+                    <p class="text-center fs-6 fst-italic text-danger m-1">Forgot password?</p>
+                    <hr class="m-1 featurette-divider ">
+
+                  <a class="btn btn-danger" href="{% url 'my_app_account:registration' %}">
+                    Create new account
+                  </a>
+                </div>
+              </div>
+
+          </div>
+
+        </div>
+{% endblock %}
