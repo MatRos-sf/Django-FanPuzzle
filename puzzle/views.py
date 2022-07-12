@@ -216,3 +216,8 @@ def puzzle_finished(request, pk):
     else:
         puzzle.finished.add(request.user)
     return HttpResponseRedirect(reverse('puzzle-detail', args=[str(pk)]))
+
+# Ranking of puzzle
+def ranking_view(request):
+    top_ten_puzzle = Puzzle.objects.order_by('-likes')
+    return render(request, 'puzzle/ranking.html', {'top_ten': top_ten_puzzle})

@@ -2,7 +2,8 @@ from django.urls import path
 from .views import (
     HomeListView, PuzzleDetail, add_puzzle, add_company, import_data,
     update_puzzle, search_puzzle, search_navibar, update_company,
-    CompanyDetail, puzzle_like, puzzle_to_do, puzzle_finished)
+    CompanyDetail, puzzle_like, puzzle_to_do, puzzle_finished,
+    ranking_view)
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -22,6 +23,7 @@ urlpatterns = [
     path('puzzle-like/<int:pk>/', puzzle_like, name='puzzle_like_view'),
     path('puzzle-to-do/<int:pk>/', puzzle_to_do, name='puzzle_to_to_view'),
     path('puzzle-finished/<int:pk>/', puzzle_finished, name='puzzle_finished_view'),
+    path('ranking/', ranking_view, name='puzzle_ranking'),
 
 ]
 

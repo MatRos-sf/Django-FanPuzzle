@@ -80,3 +80,5 @@ class UserDetail(DetailView):
     template_name = 'accounts/user_detail.html'
     context_object_name = 'user'
 
+
+

@@ -1,0 +1,25 @@
+{% extends "frame.html" %}
+{% block title %}Ranking{% endblock %}
+{% block content %}
+
+    <center class="p-5">
+        <h1>Result</h1>
+        <div class="list-group">
+            {% for object in top_ten %}
+                <a href="{% url 'puzzle-detail' object.pk %}" class="list-group-item list-group-item-action list-group-item-danger" >
+                    <div class="d-flex w-100 justify-content-between">
+                      <h5 class="mb-1">{{ object.name }}</h5>
+                      <small class="text-muted"></small>
+                    </div>
+                    <p class="mb-1">{{ object.company }}</p>
+                    <small class="text-muted">{{ forloop.counter }}</small>
+                  </a>
+
+            {% endfor %}
+
+
+        </div>
+
+    </center>
+
+{% endblock %}
