@@ -4,9 +4,11 @@ from bs4 import BeautifulSoup as bs
 
 def information_with_jumbo(url_website):
     url = url_website
-
+    user_agent = {
+        'User-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36'
+    }
     # creating request objects
-    html = requests.get(url).content
+    html = requests.get(url, headers=user_agent).content
     data = bs(html, 'html.parser')
 
     # find name
@@ -46,10 +48,12 @@ def information_with_jumbo(url_website):
     all_images = data.find_all('img')
     corrent_image = []
     # `<img alt="" height="150" src="https://www.jumbo.eu/wp-content/uploads/2018/05/W`ASGIJ-150x150.png" width="150">
+
     for img in all_images:
         img = img.get('src')
         if an + '_1' in img:
             corrent_image.append(img)
+    print(corrent_image)
     if corrent_image:
         image = corrent_image[0]
     else:
@@ -58,7 +62,7 @@ def information_with_jumbo(url_website):
 
     if image:
         from datetime import datetime
-        name_image = datetime.now().strftime("%Y-%m-%d-%H-%M-%S") +'.jpg'
+        name_image = datetime.now().strftime("%Y-%m-%d-%H-%M-%S") +'.png'
         img_data = requests.get(image).content
         with open(f'media\\images\\{name_image}', 'wb') as hadler:
             hadler.write(img_data)

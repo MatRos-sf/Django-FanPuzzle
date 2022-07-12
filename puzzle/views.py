@@ -66,6 +66,7 @@ def add_puzzle(request):
             cd = forms.cleaned_data
             company = cd.pop('company')
             puzzle = Puzzle.objects.create(company=company, **cd)
+            #punkty za dodanie
             point_for_add_puzzle(request.user.points)
             return redirect('puzzle-detail', pk=puzzle.pk)
         else:
@@ -111,6 +112,8 @@ def import_data(request):
         if forms.is_valid():
             cd = forms.cleaned_data
             detail_information = information_with_jumbo(cd['url'])
+            print(detail_information)
+            return HttpResponse('<h1>Login...</h1>')
             # create model
             try:
                 company_model = Company.objects.get(name=detail_information.pop('company'))
